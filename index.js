@@ -1,6 +1,6 @@
 const express = require("express");
 const multer = require("multer");
-const PORT = 9000;
+const PORT = 3000;
 
 const { main } = require("./convert");
 const app = express();
@@ -18,5 +18,7 @@ app.post("/upload", upload.single("file"), function (req, res) {
       res.status(500).send(err);
     });
 });
-
+app.get("/start", (req, res) => {
+  res.status(200).send("Application is running");
+});
 app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
