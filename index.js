@@ -19,6 +19,7 @@ app.post("/upload", upload.single("file"), function (req, res) {
     });
 });
 app.get("/start", (req, res) => {
+  console.log("im being called n times  ......");
   res.status(200).send("Application is running");
 });
 app.listen(PORT, () => console.log(`server is running on port ${PORT}`));
