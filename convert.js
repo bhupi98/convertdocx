@@ -25,7 +25,7 @@ async function main(buffer) {
     numberOfPages: numberOfPages.length,
     height: height,
     width: width,
-    pdfBuffer: base64,
+    pdfBuffer: pdfBuf,
   };
   console.log("data", data);
   return data;
