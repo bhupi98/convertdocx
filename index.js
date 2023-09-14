@@ -19,9 +19,10 @@ const storage = multer.memoryStorage(); // Store the uploaded file in memory as 
 const upload = multer({ storage: storage });
 app.post("/docxtopdf", async (req, res) => {
   try {
-    let base64 = req.body.base64;
-    let buffer = Buffer.from(base64, "base64").toString("utf-8");
-    console.log("docxBuffer", buffer);
+    // let base64 = req.body.base64;
+    // let buffer = Buffer.from(base64, "base64").toString("utf-8");
+    //console.log("docxBuffer", buffer);
+    let buffer = req.body;
     let data = await main(buffer);
     console.log("data", data);
     res.status(200).send(data);
