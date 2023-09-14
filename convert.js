@@ -15,16 +15,9 @@ async function main(buffer) {
 
   // Convert it to pdf format with undefined filter (see Libreoffice docs about filter)
   let pdfBuf = await libre.convertAsync(buffer, ext, undefined);
-  let base64 = Buffer.from(pdfBuf, "utf-8").toString("base64");
-  console.log("bas365", base64);
-  const pdfDoc = await PDFDocument.load(pdfBuf);
-  const numberOfPages = pdfDoc.getPages();
-  const { width, height } = numberOfPages[0].getSize();
+
   // Here in done you have pdf file which you can save or transfer in another stream
   let data = {
-    numberOfPages: numberOfPages.length,
-    height: height,
-    width: width,
     pdfBuffer: pdfBuf,
   };
   console.log("data", data);
