@@ -12,16 +12,13 @@ async function main(buffer) {
 
   // Read file
   //const docxBuf = await fs.readFile(inputPath);
-
+  const filter = "writer_pdf_Export";
   // Convert it to pdf format with undefined filter (see Libreoffice docs about filter)
-  let pdfBuf = await libre.convertAsync(buffer, ext, undefined);
+  let pdfBuf = await libre.convertAsync(buffer, ext, filter);
 
   // Here in done you have pdf file which you can save or transfer in another stream
-  let data = {
-    pdfBuffer: pdfBuf,
-  };
-  console.log("data", data);
-  return data;
+
+  return { pdfBuffer: pdfBuf };
 }
 
 module.exports = { main: main };
