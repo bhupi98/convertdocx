@@ -6,7 +6,7 @@ const PORT = 8080;
 const { main } = require("./convert");
 const app = express();
 app.use(
-  express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 10000 })
+  express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 1000000 })
 );
 app.use(express.json({ limit: "50mb" }));
 // app.use(
