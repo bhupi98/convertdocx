@@ -14,7 +14,7 @@ app.use(express.json({ limit: "50mb" }));
 //     type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 //   })
 // );
-
+app.use(express.raw({ type: "*/*" }));
 const storage = multer.memoryStorage(); // Store the uploaded file in memory as a buffer
 const upload = multer({ storage: storage });
 app.post("/docxtopdf", async (req, res) => {
