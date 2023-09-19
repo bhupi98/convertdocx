@@ -25,13 +25,14 @@ const upload = multer({ storage: storage });
 app.post("/docxtopdf", async (req, res) => {
   try {
     let buffer = req.body;
-    const buffer1 = Buffer.from(buffer, "binary");
+    const buffer1 = Buffer.from(buffer);
     console.log("buffer2", buffer1);
     let data = await main(buffer1);
     //console.log("data", data);
     //res.setHeader("Content-Type", "application/pdf");
     res.status(200).send(data);
   } catch (error) {
+    console.log("error", error);
     res.status(500).send(error);
   }
 });
