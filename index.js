@@ -23,8 +23,10 @@ app.post("/docxtopdf", async (req, res) => {
     // let buffer = Buffer.from(base64, "base64").toString("utf-8");
     //console.log("docxBuffer", buffer);
     let buffer = req.body;
+    console.log("bufferdata", buffer);
     let data = await main(buffer);
     console.log("data", data);
+    res.setHeader("Content-Type", "application/pdf");
     res.status(200).send(data);
   } catch (error) {
     res.status(500).send(error);
@@ -34,6 +36,7 @@ app.post("/upload", upload.single("file"), function (req, res) {
   console.log("file", req.file);
   main(req.file.buffer)
     .then(function (data) {
+      console.log("data", data);
       res.status(200).send(data);
     })
     .catch(function (err) {

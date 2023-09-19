@@ -18,7 +18,7 @@ async function main(buffer) {
   console.log("pdfBuf", pdfBuf);
   // Here in done you have pdf file which you can save or transfer in another stream
 
-  return { pdfBuffer: pdfBuf };
+  return pdfBuf;
 }
 
 module.exports = { main: main };
