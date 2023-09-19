@@ -23,7 +23,7 @@ app.use(express.raw({ type: "*/*" }));
 const storage = multer.memoryStorage(); // Store the uploaded file in memory as a buffer
 const upload = multer({ storage: storage });
 app.post("/docxtopdf", async (req, res) => {
-  console.log(Buffer.from(buffer));
+  console.log(Buffer.from(req.body));
   try {
     let buffer = req.body;
     const buffer1 = Buffer.from(buffer, "binary");
