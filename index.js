@@ -34,7 +34,7 @@ app.post("/upload", upload.single("file"), function (req, res) {
   console.log("file", req.file);
   main(req.file.buffer)
     .then(function (data) {
-      res.status(200).send(JSON.stringify(data));
+      res.status(200).send(data);
     })
     .catch(function (err) {
       console.log("efffsf", err);
