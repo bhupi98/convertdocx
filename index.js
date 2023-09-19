@@ -5,16 +5,21 @@ const PORT = 8080;
 
 const { main } = require("./convert");
 const app = express();
+app.use(express.json({ limit: "100mb" }));
 app.use(
-  express.urlencoded({ extended: true, limit: "50mb", parameterLimit: 1000000 })
+  express.urlencoded({
+    extended: true,
+    limit: "100mb",
+    parameterLimit: 1000000,
+  })
 );
-app.use(express.json({ limit: "50mb" }));
+app.use(express.raw({ type: "*/*" }));
 // app.use(
 //   express.raw({
 //     type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
 //   })
 // );
-app.use(express.raw({ type: "*/*" }));
+
 const storage = multer.memoryStorage(); // Store the uploaded file in memory as a buffer
 const upload = multer({ storage: storage });
 app.post("/docxtopdf", async (req, res) => {
