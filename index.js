@@ -1,5 +1,6 @@
 const express = require("express");
 const multer = require("multer");
+const FormData = require("form-data");
 const axios = require("axios");
 const PORT = 8080;
 
@@ -13,22 +14,15 @@ app.use(
     parameterLimit: 1000000,
   })
 );
-app.use(express.raw({ type: "*/*" }));
-// app.use(
-//   express.raw({
-//     type: "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-//   })
-// );
+// app.use(express.raw({ type: "*/*" }));
 
 const storage = multer.memoryStorage(); // Store the uploaded file in memory as a buffer
 const upload = multer({ storage: storage });
-app.post("/docxtopdf", async (req, res) => {
-  console.log(Buffer.from(req.body));
+app.post("/docxtopdf", upload.single("file"), async (req, res) => {
   try {
-    let buffer = req.body;
-    const buffer1 = Buffer.from(buffer, "binary");
-    console.log("buffer2", buffer1);
-    let data = await main(buffer1);
+    let buffer = req.file.buffer;
+    console.log("buffer", buffer);
+    let data = await main(buffer);
     //console.log("data", data);
     //res.setHeader("Content-Type", "application/pdf");
     res.status(200).send(data);
@@ -37,21 +31,31 @@ app.post("/docxtopdf", async (req, res) => {
     res.status(500).send(error);
   }
 });
-app.post("/upload", upload.single("file"), function (req, res) {
-  console.log("file", req.file);
-  main(req.file.buffer)
-    .then(function (data) {
-      console.log("data", data);
-      res.status(200).send(data);
-    })
-    .catch(function (err) {
-      console.log("efffsf", err);
-      res.status(500).send(err);
-    });
-});
+// const uploadFileToServer = async (req, res) => {
+//   try {
+//     const form = new FormData();
+//     form.append("file", req.file.buffer, { filename: req.file.originalname });
+//     console.log("fomrdata", form);
+//     const url = "http://localhost:8081/upload1"; // Replace with the actual endpoint
+
+//     const response = await axios.post(url, form, {
+//       headers: {
+//         ...form.getHeaders(),
+//       },
+//     });
+
+//     console.log("File uploaded successfully:", response.data);
+//     res.status(200).send("File uploaded successfully");
+//   } catch (error) {
+//     console.error("Error uploading file:", error);
+//     res.status(500).send("Error uploading file");
+//   }
+// };
+// app.post("/upload", upload.single("file"), uploadFileToServer);
 app.get("/", async (req, res) => {
   res.status(200).send("Application is running");
 });
+
 app.post("/start", async (req, res) => {
   let base64 = req.body.base64;
   // let buffer = Buffer.from(base64, "base64").toString("utf-8");
